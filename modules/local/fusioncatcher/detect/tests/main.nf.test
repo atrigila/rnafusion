@@ -1,0 +1,68 @@
+nextflow_process {
+
+    name "Test Process FUSIONCATCHER"
+    script "../main.nf"
+    process "FUSIONCATCHER"
+
+    test("Should run FUSIONCATCHER") {
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test', single_end:false ], // meta map
+                    [
+                        file("https://github.com/nf-core/test-datasets/raw/rnafusion/testdata/human/reads_1.fq.gz"),
+                        file("https://github.com/nf-core/test-datasets/raw/rnafusion/testdata/human/reads_2.fq.gz")
+                    ]
+                ]
+                input[1] = file("reference")
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    process.out.fusions,
+                    process.out.summary,
+                    file(process.out.log[0][1]).name,
+                    process.out.versions
+                ).match() }
+            )
+        }
+    }
+
+    test("Should create stub files") {
+
+        options "-stub"
+
+        when {
+            process {
+                """
+                input[0] = [
+                    [ id:'test_stub', single_end:false ], // meta map
+                    [
+                        file("https://github.com/nf-core/test-datasets/raw/rnafusion/testdata/human/reads_1.fq.gz"),
+                        file("https://github.com/nf-core/test-datasets/raw/rnafusion/testdata/human/reads_2.fq.gz")
+                    ]
+                ]
+                input[1] = file("reference")
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(
+                    process.out.fusions,
+                    process.out.summary,
+                    file(process.out.log[0][1]).name,
+                    process.out.versions
+                ).match() }
+            )
+        }
+    }
+}
