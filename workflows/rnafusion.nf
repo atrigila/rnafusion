@@ -115,7 +115,8 @@ workflow RNAFUSION {
         ch_reads_all,
         ch_chrgtf,
         ch_starindex_ref,
-        ch_fasta
+        ch_fasta,
+        params.starfusion_ref
     )
     ch_versions = ch_versions.mix(STARFUSION_WORKFLOW.out.versions)
 
