@@ -1,0 +1,66 @@
+nextflow_workflow {
+
+    name "Test Subworkflow FUSIONCATCHER_WORKFLOW"
+    script "../main.nf"
+    workflow "FUSIONCATCHER_WORKFLOW"
+    tag "subworkflow"
+    tag "fusioncatcher"
+    tag "fusioncatcher/build"
+    tag "fusioncatcher/detect"
+
+    // Test
+    test("FUSIONCATCHER_WORKFLOW - Homo sapiens - FASTQs chr4") {
+
+        setup {
+            // Download reference files for fusioncatch
+            run("FUSIONCATCHER_BUILD") {
+                script "../../../../modules/local/fusioncatcher/build/main.nf"
+                process {
+                """
+                input[0] = Channel.value('46')
+                """
+                }
+            }
+        }
+
+        // TODO: get smaller reference files for fusioncatcher
+        when {
+            workflow {
+                """
+                // ch_reads
+                input[0] = Channel.of(
+                    [
+                        [ id: "test_fastqs", single_end: false ],
+                        [
+                            file("https://raw.githubusercontent.com/nf-core/test-datasets/refs/heads/rnafusion/testdata/human/reads_1.fq.gz", checkIfExists: true),
+                            file("https://raw.githubusercontent.com/nf-core/test-datasets/refs/heads/rnafusion/testdata/human/reads_2.fq.gz", checkIfExists: true)
+                        ]
+                    ] )
+
+                // ch_references
+                input[1] = FUSIONCATCHER_BUILD.out.reference
+
+                // fusioncatcher (boolean)
+                input[2] = true
+
+                // all (boolean)
+                input[3] = true
+
+                // fusioninspector_only (boolean)
+                input[4] = false
+
+                // fusioncatcher_fusions (string path)
+                input[5] = null
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(workflow.out).match() }
+            )
+        }
+    }
+
+}

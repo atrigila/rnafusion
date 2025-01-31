@@ -2,8 +2,10 @@ process FUSIONREPORT_DOWNLOAD {
     tag 'fusionreport'
     label 'process_medium'
 
-    conda "bioconda::star=2.7.9a"
-    container "docker.io/clinicalgenomics/fusion-report:3.1.0"
+    conda "${moduleDir}/environment.yml"
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/d9/d9d1075dc45da6b08ec99c6e8bcc83e0ab71a674e7efdc7a36e459539793fcf9/data' :
+        'community.wave.seqera.io/library/fusion-report_openpyxl:6748677442b83a9a'}"
 
     output:
     tuple val(meta), path("fusion_report_db"), emit: fusionreport_ref

@@ -1,22 +1,144 @@
 {
     "stub test no fastp trim": {
         "content": [
-            4,
+            31,
             {
+                "ARRIBA_ARRIBA": {
+                    "arriba": "2.4.0"
+                },
+                "ARRIBA_DOWNLOAD": {
+                    "arriba_download": "2.4.0"
+                },
+                "CTATSPLICING_STARTOCANCERINTRONS": {
+                    "ctat-splicing": "0.0.2"
+                },
                 "FASTQC": {
                     "fastqc": "0.12.1"
                 },
+                "FUSIONCATCHER_BUILD": {
+                    "fusioncatcher": "1.33"
+                },
+                "FUSIONCATCHER_DETECT": {
+                    "fusioncatcher": "1.33"
+                },
                 "FUSIONREPORT": {
                     "fusion_report": "2.1.5"
+                },
+                "FUSIONREPORT_DOWNLOAD": {
+                    "fusion_report": "2.1.5"
+                },
+                "GATK4_BEDTOINTERVALLIST": {
+                    "gatk4": "4.6.1.0"
+                },
+                "GATK4_CREATESEQUENCEDICTIONARY": {
+                    "gatk4": "4.6.1.0"
+                },
+                "GATK4_MARKDUPLICATES": {
+                    "gatk4": "4.5.0.0",
+                    "samtools": "1.19.2"
+                },
+                "GENCODE_DOWNLOAD": {
+                    "wget": null
+                },
+                "GET_RRNA_TRANSCRIPTS": {
+                    "get_rrna_transcripts": "v1.0"
+                },
+                "GFFREAD": {
+                    "gffread": "0.12.7"
+                },
+                "GTF_TO_REFFLAT": {
+                    "gtfToGenePred": 377
+                },
+                "HGNC_DOWNLOAD": {
+                    "wget": null
+                },
+                "PICARD_COLLECTINSERTSIZEMETRICS": {
+                    "picard": "3.3.0"
+                },
+                "PICARD_COLLECTRNASEQMETRICS": {
+                    "picard": "3.3.0"
+                },
+                "SALMON_INDEX": {
+                    "salmon": "1.10.3"
+                },
+                "SALMON_QUANT": {
+                    "salmon": "1.10.3"
+                },
+                "SAMTOOLS_FAIDX": {
+                    "samtools": 1.21
+                },
+                "SAMTOOLS_INDEX_FOR_STARFUSION": {
+                    "samtools": 1.21
+                },
+                "STARFUSION": {
+                    "STAR-Fusion": "1.14.0"
+                },
+                "STARFUSION_BUILD": {
+                    "STAR-Fusion": "1.14.0"
+                },
+                "STAR_FOR_ARRIBA": {
+                    "star": "2.7.11b",
+                    "samtools": 1.2,
+                    "gawk": "5.1.0"
+                },
+                "STAR_FOR_STARFUSION": {
+                    "star": "2.7.11b",
+                    "samtools": 1.2,
+                    "gawk": "5.1.0"
+                },
+                "STAR_GENOMEGENERATE": {
+                    "star": "2.7.11b",
+                    "samtools": 1.2,
+                    "gawk": "5.1.0"
+                },
+                "STRINGTIE_MERGE": {
+                    "stringtie": "2.2.1"
+                },
+                "STRINGTIE_STRINGTIE": {
+                    "stringtie": "2.2.3"
                 },
                 "Workflow": {
                     "nf-core/rnafusion": "v4.0.0dev"
                 }
             },
             [
+                "arriba",
+                "arriba/test.arriba.fusions.discarded.tsv",
+                "arriba/test.arriba.fusions.tsv",
+                "ctatsplicing",
+                "ctatsplicing/arriba",
+                "ctatsplicing/arriba/test.cancer.introns",
+                "ctatsplicing/arriba/test.cancer.introns.prelim",
+                "ctatsplicing/arriba/test.cancer_intron_reads.sorted.bam",
+                "ctatsplicing/arriba/test.cancer_intron_reads.sorted.bam.bai",
+                "ctatsplicing/arriba/test.chckpts",
+                "ctatsplicing/arriba/test.ctat-splicing.igv.html",
+                "ctatsplicing/arriba/test.gene_reads.sorted.sifted.bam",
+                "ctatsplicing/arriba/test.gene_reads.sorted.sifted.bam.bai",
+                "ctatsplicing/arriba/test.igv.tracks",
+                "ctatsplicing/arriba/test.introns",
+                "ctatsplicing/arriba/test.introns.for_IGV.bed",
+                "ctatsplicing/starfusion",
+                "ctatsplicing/starfusion/test.cancer.introns",
+                "ctatsplicing/starfusion/test.cancer.introns.prelim",
+                "ctatsplicing/starfusion/test.cancer_intron_reads.sorted.bam",
+                "ctatsplicing/starfusion/test.cancer_intron_reads.sorted.bam.bai",
+                "ctatsplicing/starfusion/test.chckpts",
+                "ctatsplicing/starfusion/test.ctat-splicing.igv.html",
+                "ctatsplicing/starfusion/test.gene_reads.sorted.sifted.bam",
+                "ctatsplicing/starfusion/test.gene_reads.sorted.sifted.bam.bai",
+                "ctatsplicing/starfusion/test.igv.tracks",
+                "ctatsplicing/starfusion/test.introns",
+                "ctatsplicing/starfusion/test.introns.for_IGV.bed",
                 "fastqc",
                 "fastqc/test.html",
                 "fastqc/test.zip",
+                "fusioncatcher",
+                "fusioncatcher/human_v46",
+                "fusioncatcher/human_v46/ensembl_fully_overlapping_genes.txt",
+                "fusioncatcher/test.fusioncatcher.fusion-genes.txt",
+                "fusioncatcher/test.fusioncatcher.log",
+                "fusioncatcher/test.fusioncatcher.summary.txt",
                 "fusionreport",
                 "fusionreport/test",
                 "fusionreport/test/AAA_BBB.html",
@@ -25,28 +147,231 @@
                 "fusionreport/test/test.fusions.csv",
                 "fusionreport/test/test.fusions.json",
                 "fusionreport/test/test_fusionreport_index.html",
+                "gatk4",
+                "gatk4/Homo_sapiens.GRCh38.46_dna_primary_assembly.dict",
+                "get",
+                "get/rrna.bed",
+                "get/rrna.gtf",
                 "multiqc",
                 "multiqc/multiqc_data",
                 "multiqc/multiqc_plots",
                 "multiqc/multiqc_report.html",
+                "picard",
+                "picard/test.bai",
+                "picard/test.bam",
+                "picard/test.bam.metrics",
+                "picard/test.cram",
+                "picard/test.cram.crai",
+                "picard/test.rna_metrics",
+                "picard/test_collectinsertsize.pdf",
+                "picard/test_collectinsertsize.txt",
                 "pipeline_info",
-                "pipeline_info/nf_core_pipeline_software_mqc_versions.yml",
+                "pipeline_info/nf_core_rnafusion_software_mqc_versions.yml",
+                "references",
+                "references/arriba",
+                "references/arriba/blacklist_hg38_GRCh38_v2.4.0.tsv.gz",
+                "references/arriba/cytobands_hg38_GRCh38_v2.4.0.tsv",
+                "references/arriba/known_fusions_hg38_GRCh38_v2.4.0.tsv.gz",
+                "references/arriba/protein_domains_hg38_GRCh38_v2.4.0.gff3",
+                "references/fusion_report_db",
+                "references/fusion_report_db/DB-timestamp.txt",
+                "references/fusion_report_db/cosmic.db",
+                "references/fusion_report_db/fusion_report.log",
+                "references/fusion_report_db/fusiongdb2.db",
+                "references/fusion_report_db/mitelman.db",
+                "references/gencode",
+                "references/gencode/Homo_sapiens.GRCh38.46.gtf",
+                "references/gencode/Homo_sapiens.GRCh38.46.gtf.interval_list",
+                "references/gencode/Homo_sapiens.GRCh38.46.gtf.refflat",
+                "references/gencode/Homo_sapiens.GRCh38.46_dna_primary_assembly.fa",
+                "references/gencode/Homo_sapiens.GRCh38.46_dna_primary_assembly.fa.fai",
+                "references/gffread",
+                "references/gffread/Homo_sapiens.GRCh38.46.gtf.fasta",
+                "references/hgnc",
+                "references/hgnc/HGNC-DB-timestamp.txt",
+                "references/hgnc/hgnc_complete_set.txt",
+                "references/salmon",
+                "references/salmon/salmon",
+                "references/salmon/salmon/complete_ref_lens.bin",
+                "references/salmon/salmon/ctable.bin",
+                "references/salmon/salmon/ctg_offsets.bin",
+                "references/salmon/salmon/duplicate_clusters.tsv",
+                "references/salmon/salmon/info.json",
+                "references/salmon/salmon/mphf.bin",
+                "references/salmon/salmon/pos.bin",
+                "references/salmon/salmon/pre_indexing.log",
+                "references/salmon/salmon/rank.bin",
+                "references/salmon/salmon/refAccumLengths.bin",
+                "references/salmon/salmon/ref_indexing.log",
+                "references/salmon/salmon/reflengths.bin",
+                "references/salmon/salmon/refseq.bin",
+                "references/salmon/salmon/seq.bin",
+                "references/salmon/salmon/versionInfo.json",
+                "references/star",
+                "references/star/Genome",
+                "references/star/Log.out",
+                "references/star/SA",
+                "references/star/SAindex",
+                "references/star/chrLength.txt",
+                "references/star/chrName.txt",
+                "references/star/chrNameLength.txt",
+                "references/star/chrStart.txt",
+                "references/star/exonGeTrInfo.tab",
+                "references/star/exonInfo.tab",
+                "references/star/geneInfo.tab",
+                "references/star/genomeParameters.txt",
+                "references/star/sjdbInfo.txt",
+                "references/star/sjdbList.fromGTF.out.tab",
+                "references/star/sjdbList.out.tab",
+                "references/star/transcriptInfo.tab",
                 "salmon",
                 "salmon/test",
                 "salmon/test_lib_format_counts.json",
-                "salmon/test_meta_info.json"
+                "salmon/test_meta_info.json",
+                "star_for_arriba",
+                "star_for_arriba/test.Aligned.sortedByCoord.out.bam",
+                "star_for_arriba/test.Aligned.unsort.out.bam",
+                "star_for_arriba/test.Chimeric.out.junction",
+                "star_for_arriba/test.Log.final.out",
+                "star_for_arriba/test.Log.out",
+                "star_for_arriba/test.Log.progress.out",
+                "star_for_arriba/test.ReadsPerGene.out.tab",
+                "star_for_arriba/test.SJ.out.tab",
+                "star_for_arriba/test.Signal.UniqueMultiple.str1.out.bg",
+                "star_for_arriba/test.Signal.UniqueMultiple.str1.out.wig",
+                "star_for_arriba/test.out.sam",
+                "star_for_arriba/test.sortedByCoord.out.bam",
+                "star_for_arriba/test.tab",
+                "star_for_arriba/test.toTranscriptome.out.bam",
+                "star_for_arriba/test.unmapped_1.fastq.gz",
+                "star_for_arriba/test.unmapped_2.fastq.gz",
+                "star_for_arriba/testXd.out.bam",
+                "star_for_starfusion",
+                "star_for_starfusion/test.Aligned.sortedByCoord.out.bam",
+                "star_for_starfusion/test.Aligned.unsort.out.bam",
+                "star_for_starfusion/test.Chimeric.out.junction",
+                "star_for_starfusion/test.Log.final.out",
+                "star_for_starfusion/test.Log.out",
+                "star_for_starfusion/test.Log.progress.out",
+                "star_for_starfusion/test.ReadsPerGene.out.tab",
+                "star_for_starfusion/test.SJ.out.tab",
+                "star_for_starfusion/test.Signal.UniqueMultiple.str1.out.bg",
+                "star_for_starfusion/test.Signal.UniqueMultiple.str1.out.wig",
+                "star_for_starfusion/test.out.sam",
+                "star_for_starfusion/test.sortedByCoord.out.bam",
+                "star_for_starfusion/test.sortedByCoord.out.bam.bai",
+                "star_for_starfusion/test.tab",
+                "star_for_starfusion/test.toTranscriptome.out.bam",
+                "star_for_starfusion/test.unmapped_1.fastq.gz",
+                "star_for_starfusion/test.unmapped_2.fastq.gz",
+                "star_for_starfusion/testXd.out.bam",
+                "starfusion",
+                "starfusion/ctat_genome_lib_build_dir",
+                "starfusion/ctat_genome_lib_build_dir/AnnotFilterRule.pm",
+                "starfusion/ctat_genome_lib_build_dir/PFAM.domtblout.dat.gz",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/_fusion_annot_lib.idx.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/_prot_info_db.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/annotfiltrule_cp.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/blast_pairs.idx.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/cp_gene_blast_pairs.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/cp_pfam_dat.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/cp_ref_annot_cdna.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/fusion_annot_lib.cp.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/index_pfam_hits.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/index_ref_annot_cdna.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/makeblastdb.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/mm2.splice_bed.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/mm2_genome_idx.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/ref_annot.cdsplus.dfam_masked.fa.cp.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/ref_annot.cdsplus.dfam_masked.fa.idx.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/ref_annot.gtf.gene_spans.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/ref_annot.gtf.mini.sortu.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/ref_annot.gtf.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/ref_genome.fa.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/ref_genome_fai.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/trans.blast.dat.cp.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/trans.blast.dat.index.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/validate_ctat_genome_lib.ok",
+                "starfusion/ctat_genome_lib_build_dir/blast_pairs.dat.gz",
+                "starfusion/ctat_genome_lib_build_dir/blast_pairs.idx",
+                "starfusion/ctat_genome_lib_build_dir/fusion_annot_lib.gz",
+                "starfusion/ctat_genome_lib_build_dir/fusion_annot_lib.idx",
+                "starfusion/ctat_genome_lib_build_dir/pfam_domains.dbm",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.cdna.fa",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.cdna.fa.idx",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.cds",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.cdsplus.fa",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.cdsplus.fa.idx",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.gtf",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.gtf.gene_spans",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.gtf.mini.sortu",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.gtf.mm2.splice.bed",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.pep",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.prot_info.dbm",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.fai",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.mm2",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.ndb",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.nhr",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.nin",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.njs",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.not",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.nsq",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.ntf",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.nto",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/Genome",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/Log.out",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/SA",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/SAindex",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/build.ok",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/chrLength.txt",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/chrName.txt",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/chrNameLength.txt",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/chrStart.txt",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/exonGeTrInfo.tab",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/exonInfo.tab",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/geneInfo.tab",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/genomeParameters.txt",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/sjdbInfo.txt",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/sjdbList.fromGTF.out.tab",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/sjdbList.out.tab",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/transcriptInfo.tab",
+                "starfusion/ctat_genome_lib_build_dir/trans.blast.align_coords.align_coords.dat",
+                "starfusion/ctat_genome_lib_build_dir/trans.blast.align_coords.align_coords.dbm",
+                "starfusion/ctat_genome_lib_build_dir/trans.blast.dat.gz",
+                "starfusion/test.starfusion.abridged.coding_effect.tsv",
+                "starfusion/test.starfusion.abridged.tsv",
+                "starfusion/test.starfusion.fusion_predictions.tsv",
+                "stringtie",
+                "stringtie/[:]",
+                "stringtie/[:]/stringtie.merged.gtf",
+                "stringtie/test.ballgown",
+                "stringtie/test.coverage.gtf",
+                "stringtie/test.gene.abundance.txt",
+                "stringtie/test.transcripts.gtf"
             ]
         ],
         "meta": {
-            "nf-test": "0.9.0",
-            "nextflow": "24.10.2"
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.3"
         },
-        "timestamp": "2024-12-03T19:27:00.717876194"
+        "timestamp": "2025-01-07T13:16:02.754052"
     },
     "stub test with fastp trim": {
         "content": [
-            6,
+            33,
             {
+                "ARRIBA_ARRIBA": {
+                    "arriba": "2.4.0"
+                },
+                "ARRIBA_DOWNLOAD": {
+                    "arriba_download": "2.4.0"
+                },
+                "CTATSPLICING_STARTOCANCERINTRONS": {
+                    "ctat-splicing": "0.0.2"
+                },
                 "FASTP": {
                     "fastp": "0.23.4"
                 },
@@ -56,14 +381,121 @@
                 "FASTQC_FOR_FASTP": {
                     "fastqc": "0.12.1"
                 },
+                "FUSIONCATCHER_BUILD": {
+                    "fusioncatcher": "1.33"
+                },
+                "FUSIONCATCHER_DETECT": {
+                    "fusioncatcher": "1.33"
+                },
                 "FUSIONREPORT": {
                     "fusion_report": "2.1.5"
+                },
+                "FUSIONREPORT_DOWNLOAD": {
+                    "fusion_report": "2.1.5"
+                },
+                "GATK4_BEDTOINTERVALLIST": {
+                    "gatk4": "4.6.1.0"
+                },
+                "GATK4_CREATESEQUENCEDICTIONARY": {
+                    "gatk4": "4.6.1.0"
+                },
+                "GATK4_MARKDUPLICATES": {
+                    "gatk4": "4.5.0.0",
+                    "samtools": "1.19.2"
+                },
+                "GENCODE_DOWNLOAD": {
+                    "wget": null
+                },
+                "GET_RRNA_TRANSCRIPTS": {
+                    "get_rrna_transcripts": "v1.0"
+                },
+                "GFFREAD": {
+                    "gffread": "0.12.7"
+                },
+                "GTF_TO_REFFLAT": {
+                    "gtfToGenePred": 377
+                },
+                "HGNC_DOWNLOAD": {
+                    "wget": null
+                },
+                "PICARD_COLLECTINSERTSIZEMETRICS": {
+                    "picard": "3.3.0"
+                },
+                "PICARD_COLLECTRNASEQMETRICS": {
+                    "picard": "3.3.0"
+                },
+                "SALMON_INDEX": {
+                    "salmon": "1.10.3"
+                },
+                "SALMON_QUANT": {
+                    "salmon": "1.10.3"
+                },
+                "SAMTOOLS_FAIDX": {
+                    "samtools": 1.21
+                },
+                "SAMTOOLS_INDEX_FOR_STARFUSION": {
+                    "samtools": 1.21
+                },
+                "STARFUSION": {
+                    "STAR-Fusion": "1.14.0"
+                },
+                "STARFUSION_BUILD": {
+                    "STAR-Fusion": "1.14.0"
+                },
+                "STAR_FOR_ARRIBA": {
+                    "star": "2.7.11b",
+                    "samtools": 1.2,
+                    "gawk": "5.1.0"
+                },
+                "STAR_FOR_STARFUSION": {
+                    "star": "2.7.11b",
+                    "samtools": 1.2,
+                    "gawk": "5.1.0"
+                },
+                "STAR_GENOMEGENERATE": {
+                    "star": "2.7.11b",
+                    "samtools": 1.2,
+                    "gawk": "5.1.0"
+                },
+                "STRINGTIE_MERGE": {
+                    "stringtie": "2.2.1"
+                },
+                "STRINGTIE_STRINGTIE": {
+                    "stringtie": "2.2.3"
                 },
                 "Workflow": {
                     "nf-core/rnafusion": "v4.0.0dev"
                 }
             },
             [
+                "arriba",
+                "arriba/test.arriba.fusions.discarded.tsv",
+                "arriba/test.arriba.fusions.tsv",
+                "ctatsplicing",
+                "ctatsplicing/arriba",
+                "ctatsplicing/arriba/test.cancer.introns",
+                "ctatsplicing/arriba/test.cancer.introns.prelim",
+                "ctatsplicing/arriba/test.cancer_intron_reads.sorted.bam",
+                "ctatsplicing/arriba/test.cancer_intron_reads.sorted.bam.bai",
+                "ctatsplicing/arriba/test.chckpts",
+                "ctatsplicing/arriba/test.ctat-splicing.igv.html",
+                "ctatsplicing/arriba/test.gene_reads.sorted.sifted.bam",
+                "ctatsplicing/arriba/test.gene_reads.sorted.sifted.bam.bai",
+                "ctatsplicing/arriba/test.igv.tracks",
+                "ctatsplicing/arriba/test.introns",
+                "ctatsplicing/arriba/test.introns.for_IGV.bed",
+                "ctatsplicing/starfusion",
+                "ctatsplicing/starfusion/test.cancer.introns",
+                "ctatsplicing/starfusion/test.cancer.introns.prelim",
+                "ctatsplicing/starfusion/test.cancer_intron_reads.sorted.bam",
+                "ctatsplicing/starfusion/test.cancer_intron_reads.sorted.bam.bai",
+                "ctatsplicing/starfusion/test.chckpts",
+                "ctatsplicing/starfusion/test.ctat-splicing.igv.html",
+                "ctatsplicing/starfusion/test.gene_reads.sorted.sifted.bam",
+                "ctatsplicing/starfusion/test.gene_reads.sorted.sifted.bam.bai",
+                "ctatsplicing/starfusion/test.igv.tracks",
+                "ctatsplicing/starfusion/test.introns",
+                "ctatsplicing/starfusion/test.introns.for_IGV.bed",
                 "fastp",
                 "fastp/test.fastp.html",
                 "fastp/test.fastp.json",
@@ -76,6 +508,12 @@
                 "fastqc_for_fastp",
                 "fastqc_for_fastp/test_trimmed.html",
                 "fastqc_for_fastp/test_trimmed.zip",
+                "fusioncatcher",
+                "fusioncatcher/human_v46",
+                "fusioncatcher/human_v46/ensembl_fully_overlapping_genes.txt",
+                "fusioncatcher/test.fusioncatcher.fusion-genes.txt",
+                "fusioncatcher/test.fusioncatcher.log",
+                "fusioncatcher/test.fusioncatcher.summary.txt",
                 "fusionreport",
                 "fusionreport/test",
                 "fusionreport/test/AAA_BBB.html",
@@ -84,22 +522,216 @@
                 "fusionreport/test/test.fusions.csv",
                 "fusionreport/test/test.fusions.json",
                 "fusionreport/test/test_fusionreport_index.html",
+                "gatk4",
+                "gatk4/Homo_sapiens.GRCh38.46_dna_primary_assembly.dict",
+                "get",
+                "get/rrna.bed",
+                "get/rrna.gtf",
                 "multiqc",
                 "multiqc/multiqc_data",
                 "multiqc/multiqc_plots",
                 "multiqc/multiqc_report.html",
+                "picard",
+                "picard/test.bai",
+                "picard/test.bam",
+                "picard/test.bam.metrics",
+                "picard/test.cram",
+                "picard/test.cram.crai",
+                "picard/test.rna_metrics",
+                "picard/test_collectinsertsize.pdf",
+                "picard/test_collectinsertsize.txt",
                 "pipeline_info",
-                "pipeline_info/nf_core_pipeline_software_mqc_versions.yml",
+                "pipeline_info/nf_core_rnafusion_software_mqc_versions.yml",
+                "references",
+                "references/arriba",
+                "references/arriba/blacklist_hg38_GRCh38_v2.4.0.tsv.gz",
+                "references/arriba/cytobands_hg38_GRCh38_v2.4.0.tsv",
+                "references/arriba/known_fusions_hg38_GRCh38_v2.4.0.tsv.gz",
+                "references/arriba/protein_domains_hg38_GRCh38_v2.4.0.gff3",
+                "references/fusion_report_db",
+                "references/fusion_report_db/DB-timestamp.txt",
+                "references/fusion_report_db/cosmic.db",
+                "references/fusion_report_db/fusion_report.log",
+                "references/fusion_report_db/fusiongdb2.db",
+                "references/fusion_report_db/mitelman.db",
+                "references/gencode",
+                "references/gencode/Homo_sapiens.GRCh38.46.gtf",
+                "references/gencode/Homo_sapiens.GRCh38.46.gtf.interval_list",
+                "references/gencode/Homo_sapiens.GRCh38.46.gtf.refflat",
+                "references/gencode/Homo_sapiens.GRCh38.46_dna_primary_assembly.fa",
+                "references/gencode/Homo_sapiens.GRCh38.46_dna_primary_assembly.fa.fai",
+                "references/gffread",
+                "references/gffread/Homo_sapiens.GRCh38.46.gtf.fasta",
+                "references/hgnc",
+                "references/hgnc/HGNC-DB-timestamp.txt",
+                "references/hgnc/hgnc_complete_set.txt",
+                "references/salmon",
+                "references/salmon/salmon",
+                "references/salmon/salmon/complete_ref_lens.bin",
+                "references/salmon/salmon/ctable.bin",
+                "references/salmon/salmon/ctg_offsets.bin",
+                "references/salmon/salmon/duplicate_clusters.tsv",
+                "references/salmon/salmon/info.json",
+                "references/salmon/salmon/mphf.bin",
+                "references/salmon/salmon/pos.bin",
+                "references/salmon/salmon/pre_indexing.log",
+                "references/salmon/salmon/rank.bin",
+                "references/salmon/salmon/refAccumLengths.bin",
+                "references/salmon/salmon/ref_indexing.log",
+                "references/salmon/salmon/reflengths.bin",
+                "references/salmon/salmon/refseq.bin",
+                "references/salmon/salmon/seq.bin",
+                "references/salmon/salmon/versionInfo.json",
+                "references/star",
+                "references/star/Genome",
+                "references/star/Log.out",
+                "references/star/SA",
+                "references/star/SAindex",
+                "references/star/chrLength.txt",
+                "references/star/chrName.txt",
+                "references/star/chrNameLength.txt",
+                "references/star/chrStart.txt",
+                "references/star/exonGeTrInfo.tab",
+                "references/star/exonInfo.tab",
+                "references/star/geneInfo.tab",
+                "references/star/genomeParameters.txt",
+                "references/star/sjdbInfo.txt",
+                "references/star/sjdbList.fromGTF.out.tab",
+                "references/star/sjdbList.out.tab",
+                "references/star/transcriptInfo.tab",
                 "salmon",
                 "salmon/test",
                 "salmon/test_lib_format_counts.json",
-                "salmon/test_meta_info.json"
+                "salmon/test_meta_info.json",
+                "star_for_arriba",
+                "star_for_arriba/test.Aligned.sortedByCoord.out.bam",
+                "star_for_arriba/test.Aligned.unsort.out.bam",
+                "star_for_arriba/test.Chimeric.out.junction",
+                "star_for_arriba/test.Log.final.out",
+                "star_for_arriba/test.Log.out",
+                "star_for_arriba/test.Log.progress.out",
+                "star_for_arriba/test.ReadsPerGene.out.tab",
+                "star_for_arriba/test.SJ.out.tab",
+                "star_for_arriba/test.Signal.UniqueMultiple.str1.out.bg",
+                "star_for_arriba/test.Signal.UniqueMultiple.str1.out.wig",
+                "star_for_arriba/test.out.sam",
+                "star_for_arriba/test.sortedByCoord.out.bam",
+                "star_for_arriba/test.tab",
+                "star_for_arriba/test.toTranscriptome.out.bam",
+                "star_for_arriba/test.unmapped_1.fastq.gz",
+                "star_for_arriba/test.unmapped_2.fastq.gz",
+                "star_for_arriba/testXd.out.bam",
+                "star_for_starfusion",
+                "star_for_starfusion/test.Aligned.sortedByCoord.out.bam",
+                "star_for_starfusion/test.Aligned.unsort.out.bam",
+                "star_for_starfusion/test.Chimeric.out.junction",
+                "star_for_starfusion/test.Log.final.out",
+                "star_for_starfusion/test.Log.out",
+                "star_for_starfusion/test.Log.progress.out",
+                "star_for_starfusion/test.ReadsPerGene.out.tab",
+                "star_for_starfusion/test.SJ.out.tab",
+                "star_for_starfusion/test.Signal.UniqueMultiple.str1.out.bg",
+                "star_for_starfusion/test.Signal.UniqueMultiple.str1.out.wig",
+                "star_for_starfusion/test.out.sam",
+                "star_for_starfusion/test.sortedByCoord.out.bam",
+                "star_for_starfusion/test.sortedByCoord.out.bam.bai",
+                "star_for_starfusion/test.tab",
+                "star_for_starfusion/test.toTranscriptome.out.bam",
+                "star_for_starfusion/test.unmapped_1.fastq.gz",
+                "star_for_starfusion/test.unmapped_2.fastq.gz",
+                "star_for_starfusion/testXd.out.bam",
+                "starfusion",
+                "starfusion/ctat_genome_lib_build_dir",
+                "starfusion/ctat_genome_lib_build_dir/AnnotFilterRule.pm",
+                "starfusion/ctat_genome_lib_build_dir/PFAM.domtblout.dat.gz",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/_fusion_annot_lib.idx.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/_prot_info_db.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/annotfiltrule_cp.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/blast_pairs.idx.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/cp_gene_blast_pairs.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/cp_pfam_dat.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/cp_ref_annot_cdna.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/fusion_annot_lib.cp.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/index_pfam_hits.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/index_ref_annot_cdna.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/makeblastdb.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/mm2.splice_bed.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/mm2_genome_idx.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/ref_annot.cdsplus.dfam_masked.fa.cp.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/ref_annot.cdsplus.dfam_masked.fa.idx.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/ref_annot.gtf.gene_spans.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/ref_annot.gtf.mini.sortu.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/ref_annot.gtf.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/ref_genome.fa.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/ref_genome_fai.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/trans.blast.dat.cp.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/trans.blast.dat.index.ok",
+                "starfusion/ctat_genome_lib_build_dir/__chkpts/validate_ctat_genome_lib.ok",
+                "starfusion/ctat_genome_lib_build_dir/blast_pairs.dat.gz",
+                "starfusion/ctat_genome_lib_build_dir/blast_pairs.idx",
+                "starfusion/ctat_genome_lib_build_dir/fusion_annot_lib.gz",
+                "starfusion/ctat_genome_lib_build_dir/fusion_annot_lib.idx",
+                "starfusion/ctat_genome_lib_build_dir/pfam_domains.dbm",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.cdna.fa",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.cdna.fa.idx",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.cds",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.cdsplus.fa",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.cdsplus.fa.idx",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.gtf",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.gtf.gene_spans",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.gtf.mini.sortu",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.gtf.mm2.splice.bed",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.pep",
+                "starfusion/ctat_genome_lib_build_dir/ref_annot.prot_info.dbm",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.fai",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.mm2",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.ndb",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.nhr",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.nin",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.njs",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.not",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.nsq",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.ntf",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.nto",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/Genome",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/Log.out",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/SA",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/SAindex",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/build.ok",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/chrLength.txt",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/chrName.txt",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/chrNameLength.txt",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/chrStart.txt",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/exonGeTrInfo.tab",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/exonInfo.tab",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/geneInfo.tab",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/genomeParameters.txt",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/sjdbInfo.txt",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/sjdbList.fromGTF.out.tab",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/sjdbList.out.tab",
+                "starfusion/ctat_genome_lib_build_dir/ref_genome.fa.star.idx/transcriptInfo.tab",
+                "starfusion/ctat_genome_lib_build_dir/trans.blast.align_coords.align_coords.dat",
+                "starfusion/ctat_genome_lib_build_dir/trans.blast.align_coords.align_coords.dbm",
+                "starfusion/ctat_genome_lib_build_dir/trans.blast.dat.gz",
+                "starfusion/test.starfusion.abridged.coding_effect.tsv",
+                "starfusion/test.starfusion.abridged.tsv",
+                "starfusion/test.starfusion.fusion_predictions.tsv",
+                "stringtie",
+                "stringtie/[:]",
+                "stringtie/[:]/stringtie.merged.gtf",
+                "stringtie/test.ballgown",
+                "stringtie/test.coverage.gtf",
+                "stringtie/test.gene.abundance.txt",
+                "stringtie/test.transcripts.gtf"
             ]
         ],
         "meta": {
-            "nf-test": "0.9.0",
-            "nextflow": "24.10.2"
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.3"
         },
-        "timestamp": "2024-12-03T19:26:43.375635514"
+        "timestamp": "2025-01-07T13:13:38.690939"
     }
 }

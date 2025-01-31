@@ -9,7 +9,6 @@ include { PICARD_COLLECTINSERTSIZEMETRICS   } from '../../../modules/nf-core/pic
 workflow QC_WORKFLOW {
     take:
         ch_bam_sorted           // channel [ meta, bam        ]
-        ch_chrgtf               // channel [ meta, gtf        ]
         ch_refflat              // channel [ meta, refflat    ]
         ch_fasta                // channel [ meta, fasta      ]
         ch_fai                  // channel [ meta, fai        ]

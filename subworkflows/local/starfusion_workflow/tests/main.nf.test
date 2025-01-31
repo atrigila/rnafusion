@@ -1,0 +1,115 @@
+nextflow_workflow {
+
+    name "Test Subworkflow STARFUSION_WORKFLOW"
+    script "../main.nf"
+    workflow "STARFUSION_WORKFLOW"
+    tag "subworkflow"
+    tag "star"
+    tag "star/genomegenerate"
+    tag "star/align"
+
+
+    test("STARFUSION_WORKFLOW - Homo sapiens - FASTQs minigenome") {
+        config './nextflow.config'
+
+        setup {
+            run("STAR_GENOMEGENERATE") {
+                script "../../../../modules/nf-core/star/genomegenerate/main.nf"
+                process {
+                """
+                    // FASTA
+                    input[0] = Channel.fromPath(
+                            "https://github.com/STAR-Fusion/STAR-Fusion-Tutorial/raw/master/minigenome.fa", checkIfExists: true
+                        )
+                        .map{ [[id: it.getName() ], it ]}
+
+                    // GTF
+                    input[1] = Channel.fromPath(
+                            "https://github.com/STAR-Fusion/STAR-Fusion-Tutorial/raw/master/minigenome.gtf", checkIfExists: true
+                        )
+                        .map{ [[id: it.getName() ], it ]}
+                    """
+                }
+            }
+
+            run("STARFUSION_BUILD") {
+            script "../../../../modules/local/starfusion/build/main.nf"
+            process {
+                """
+                input[0] = [
+                    [ id:'minigenome fasta' ],
+                    file("https://github.com/STAR-Fusion/STAR-Fusion-Tutorial/raw/master/minigenome.fa")
+                ]
+                input[1] = [
+                    [ id:'minigenome gtf' ],
+                    file("https://github.com/STAR-Fusion/STAR-Fusion-Tutorial/raw/master/minigenome.gtf")
+                ]
+
+                input [2] = file("https://github.com/STAR-Fusion/STAR-Fusion-Tutorial/raw/master/CTAT_HumanFusionLib.mini.dat.gz")
+                input [3] = "human"
+                """
+            }
+        }
+        }
+
+        when {
+            workflow {
+                """
+                // ch_reads
+                input[0] = Channel.of(
+                    [
+                        [ id: "test_fastqs" ],
+                        [
+                            file("https://github.com/STAR-Fusion/STAR-Fusion-Tutorial/raw/v0.0.1/rnaseq_1.fastq.gz", checkIfExists: true),
+                            file("https://github.com/STAR-Fusion/STAR-Fusion-Tutorial/raw/v0.0.1/rnaseq_2.fastq.gz", checkIfExists: true)
+                        ]
+                    ] )
+
+                // ch_gtf
+                input[1] =
+                    Channel.fromPath(
+                        "https://github.com/STAR-Fusion/STAR-Fusion-Tutorial/raw/master/minigenome.gtf", checkIfExists: true
+                    )
+                    .map{ [ [ id: it.name ], it ] }
+
+                // ch_starindex_ref
+                input[2] = STAR_GENOMEGENERATE.out.index
+
+                // ch_fasta
+                input[3] =
+                    Channel.fromPath(
+                        "https://github.com/STAR-Fusion/STAR-Fusion-Tutorial/raw/master/minigenome.fa", checkIfExists: true
+                    )
+                    .map{ [ [ id: it.name ], it ] }
+
+                // ch_starfusion_ref
+                input[4] = STARFUSION_BUILD.out.reference
+
+                """
+            }
+            params {
+                starfusion = true
+                cram = 'starfusion'
+                outdir = "$outputDir"
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success },
+                { assert snapshot(
+                    workflow.out.fusions,
+                    file(workflow.out.star_stats[0][1]).name,
+                    workflow.out.star_gene_count,
+                    workflow.out.ch_bam_sorted,
+                    workflow.out.ch_bam_sorted_indexed,
+                    workflow.out.versions
+                ).match() }
+            )
+        }
+    }
+
+
+
+
+}

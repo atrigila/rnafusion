@@ -1,7 +1,7 @@
-name: starfusion_downloadgenome
+name: starfusion_build
 description: Download STAR-fusion genome resource required to run STAR-Fusion caller
 keywords:
-  - downoad
+  - download
 tools:
   - star-fusion:
       description: Fusion calling algorithm for RNAseq data
@@ -20,6 +20,13 @@ input:
       type: file
       description: genome gtf file
       pattern: "*.{gtf}"
+  - fusion_annot_lib:
+      type: file
+      description: Fusion annotation library (key/val pairs, tab-delimited).
+      pattern: "*.dat.gz"
+  - dfam_species:
+      type: string
+      description: DNA transposable element database (Dfam.hmm), required for repeat masking. Only 'human' or 'mouse' are accepted (will automatically pull the resources from dfam).
 
 output:
   - reference:

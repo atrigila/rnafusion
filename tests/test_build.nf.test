@@ -7,12 +7,11 @@ nextflow_pipeline {
     tag "pipeline_rnafusion"
     tag "test_build"
 
-    test("test_build") {
+    test("Test build references") {
 
         when {
             params {
-                outdir = "$outputDir"
-                all    = false // Output files when running all are too big for CI
+                outdir               = "$outputDir"
             }
         }
 
@@ -25,6 +24,10 @@ nextflow_pipeline {
             assertAll(
                 { assert workflow.success},
                 { assert snapshot(
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // pipeline versions.yml file for multiqc from which Nextflow version is removed because we tests pipelines on multiple Nextflow versions
+                    removeNextflowVersion("$outputDir/pipeline_info/nf_core_rnafusion_software_mqc_versions.yml"),
                     // All stable path name, with a relative path
                     stable_name,
                     // All files with stable contents
@@ -33,4 +36,5 @@ nextflow_pipeline {
             )
         }
     }
+
 }

@@ -6,7 +6,7 @@ include { FASTQC as FASTQC_FOR_FASTP } from '../../../modules/nf-core/fastqc/mai
 workflow TRIM_WORKFLOW {
 
     take:
-        reads           // channel [ meta, [ fastqs ] ]
+        reads           // channel [ meta, [ fastq files ] ]
         adapter_fasta   // channel [ path ]
         fastp_trim      // boolean
 

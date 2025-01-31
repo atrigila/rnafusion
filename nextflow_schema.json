@@ -15,13 +15,13 @@
                     "type": "boolean",
                     "description": "Skip QC steps"
                 },
+                "skip_vcf": {
+                    "type": "boolean",
+                    "description": "Skip vcf creation step"
+                },
                 "skip_vis": {
                     "type": "boolean",
                     "description": "Skip visualisation steps"
-                },
-                "skip_vcf": {
-                    "type": "boolean",
-                    "description": "Skip vcf generation step"
                 },
                 "skip_salmon_index": {
                     "type": "boolean",
@@ -66,11 +66,6 @@
                     "description": "MultiQC report title. Printed as page header, used for filename if not otherwise specified.",
                     "fa_icon": "fas fa-file-signature"
                 },
-                "build_references": {
-                    "type": "boolean",
-                    "fa_icon": "far fa-file-code",
-                    "description": "Specifies which analysis type for the pipeline - either build references or analyse data"
-                },
                 "cosmic_username": {
                     "type": "string",
                     "fa_icon": "far fa-file-code",
@@ -86,11 +81,10 @@
                     "fa_icon": "far fa-file-code",
                     "description": "Path to reference folder"
                 },
-                "ensembl_version": {
+                "genome_gencode_version": {
                     "type": "integer",
                     "fa_icon": "far fa-file-code",
-                    "description": "ensembl version",
-                    "default": 102
+                    "description": "gencode version"
                 },
                 "starfusion_build": {
                     "type": "boolean",
@@ -112,11 +106,6 @@
                     "type": "boolean",
                     "fa_icon": "far fa-file-code",
                     "description": "Build or run arriba references/analyses"
-                },
-                "arriba_ref": {
-                    "type": "string",
-                    "fa_icon": "far fa-file-code",
-                    "description": "Path to arriba references"
                 },
                 "arriba_ref_blacklist": {
                     "type": "string",
@@ -143,10 +132,20 @@
                     "fa_icon": "far fa-file-code",
                     "description": "Path to arriba output"
                 },
-                "ensembl_ref": {
+                "download_refs": {
+                    "type": "boolean",
+                    "fa_icon": "far fa-file-code",
+                    "description": "Download references instead of building them (for fusioncatcher and starfusion)"
+                },
+                "ctatsplicing": {
+                    "type": "boolean",
+                    "fa_icon": "far fa-file-code",
+                    "description": "Run CTAT-splicing to detect abberant cancer splicing introns. Needs --arriba and/or --starfusion to run."
+                },
+                "gencode_ref": {
                     "type": "string",
                     "fa_icon": "far fa-file-code",
-                    "description": "Path to ensembl references"
+                    "description": "Path to gencode references"
                 },
                 "fusioncatcher": {
                     "type": "boolean",
@@ -167,6 +166,11 @@
                     "type": "string",
                     "fa_icon": "far fa-file-code",
                     "description": "Path to fusioncatcher references"
+                },
+                "fusioncatcher_ref_stub_check": {
+                    "type": "string",
+                    "fa_icon": "far fa-file-code",
+                    "description": "Path to file in fusioncatcher references"
                 },
                 "fusioninspector_limitSjdbInsertNsj": {
                     "type": "integer",
@@ -193,6 +197,11 @@
                     "fa_icon": "far fa-file-code",
                     "description": "Path to fusionreport references"
                 },
+                "fusionreport_ref_stub_check": {
+                    "type": "string",
+                    "fa_icon": "far fa-file-code",
+                    "description": "Path to file in fusionreport references"
+                },
                 "hgnc_ref": {
                     "type": "string",
                     "fa_icon": "far fa-file-code",
@@ -213,6 +222,11 @@
                     "fa_icon": "far fa-file-code",
                     "description": "Path to salmon index"
                 },
+                "salmon_index_stub_check": {
+                    "type": "string",
+                    "fa_icon": "far fa-file-code",
+                    "description": "Path to file in salmon index"
+                },
                 "starfusion": {
                     "type": "boolean",
                     "fa_icon": "far fa-file-code",
@@ -228,6 +242,11 @@
                     "fa_icon": "far fa-file-code",
                     "description": "Path to starfusion references"
                 },
+                "starfusion_ref_stub_check": {
+                    "type": "string",
+                    "fa_icon": "far fa-file-code",
+                    "description": "Path to file in starfusion references"
+                },
                 "starindex": {
                     "type": "boolean",
                     "fa_icon": "far fa-file-code",
@@ -237,6 +256,11 @@
                     "type": "string",
                     "fa_icon": "far fa-file-code",
                     "description": "Path to starindex references"
+                },
+                "starindex_ref_stub_check": {
+                    "type": "string",
+                    "fa_icon": "far fa-file-code",
+                    "description": "Path to file in starindex references"
                 },
                 "stringtie": {
                     "type": "boolean",
@@ -297,9 +321,9 @@
             "fa_icon": "fas fa-dna",
             "description": "Reference genome related files and options required for the workflow.",
             "properties": {
-                "genome": {
-                    "type": "string",
-                    "description": "Name of iGenomes reference.",
+                "references_only": {
+                    "type": "boolean",
+                    "description": "Skip running the analysis, only builds the references",
                     "fa_icon": "fas fa-book"
                 },
                 "fasta": {
@@ -318,27 +342,16 @@
                     "description": "Path to FASTA genome index file.",
                     "fa_icon": "far fa-file-code"
                 },
+                "genome": {
+                    "type": "string",
+                    "description": "Name of iGenomes reference.",
+                    "fa_icon": "fas fa-book"
+                },
                 "gtf": {
                     "type": "string",
                     "format": "file-path",
                     "mimetype": "text/plain",
                     "pattern": "^\\S+\\.gtf?(\\.gz)?$",
-                    "description": "Path to GTF genome file.",
-                    "fa_icon": "far fa-file-code"
-                },
-                "chrgtf": {
-                    "type": "string",
-                    "format": "file-path",
-                    "mimetype": "text/plain",
-                    "pattern": "^\\S+\\.gtf?(\\.gz)?$",
-                    "description": "Path to GTF genome file.",
-                    "fa_icon": "far fa-file-code"
-                },
-                "transcript": {
-                    "type": "string",
-                    "format": "file-path",
-                    "mimetype": "text/plain",
-                    "pattern": "^\\S+\\.fn?a(sta)?(\\.gz)?$",
                     "description": "Path to GTF genome file.",
                     "fa_icon": "far fa-file-code"
                 },
@@ -362,6 +375,16 @@
                     "type": "boolean",
                     "fa_icon": "far fa-file-code",
                     "description": "Avoid using Cosmic DB (for example in clinical case applications where a paid license applies."
+                },
+                "fusion_annot_lib": {
+                    "type": "string",
+                    "description": "Path to Fusion Annotation Library to be used in STARFUSION_BUILD.",
+                    "fa_icon": "far fa-file-code"
+                },
+                "species": {
+                    "type": "string",
+                    "description": "Which species dfam should automatically download, default: human.",
+                    "fa_icon": "far fa-file-code"
                 }
             }
         },
@@ -500,6 +523,12 @@
                     "fa_icon": "far fa-check-circle",
                     "description": "Base URL or local path to location of pipeline test dataset files",
                     "default": "https://raw.githubusercontent.com/nf-core/test-datasets/",
+                    "hidden": true
+                },
+                "trace_report_suffix": {
+                    "type": "string",
+                    "fa_icon": "far calendar",
+                    "description": "Suffix to add to the trace report filename. Default is the date and time in the format yyyy-MM-dd_HH-mm-ss.",
                     "hidden": true
                 },
                 "seq_center": {

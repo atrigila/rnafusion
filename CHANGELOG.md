@@ -20,6 +20,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add nf-test to local subworkflow: `QC_WORKFLOW` [#568](https://github.com/nf-core/rnafusion/pull/568)
 - Add nf-test to local subworkflow: `TRIM_WORKFLOW` [#572](https://github.com/nf-core/rnafusion/pull/572)
 - Add nf-test to local module: `FUSIONREPORT_DETECT`. Improve `FUSIONREPORT_DOWNLOAD` module [#577](https://github.com/nf-core/rnafusion/pull/577)
+- Add nf-test to local subworkflow: `ARRIBA_WORKFLOW` [#578](https://github.com/nf-core/rnafusion/pull/578)
+- Add nf-test to local module: `STARFUSION_BUILD`. [#585](https://github.com/nf-core/rnafusion/pull/585)
+- Add nf-test to local module: `STARFUSION_DETECT`. [#586](https://github.com/nf-core/rnafusion/pull/586)
+- Added a new module `CTATSPLICING_STARTOCANCERINTRONS` and a new parameter `--ctatsplicing`. This options creates reports on cancer splicing abberations and requires one or both of `--arriba` and `--starfusion` to be given. [#587](https://github.com/nf-core/rnafusion/pull/587)
+- Add parameter `--references_only` when no data should be analysed, but only the references should be built [#505](https://github.com/nf-core/rnafusion/pull/505)
+- Add nf-test to local subworkflow: `FUSIONCATCHER_WORKFLOW` [#591](https://github.com/nf-core/rnafusion/pull/591)
+- Add nf-test to local subworkflow: `STARFUSION_WORKFLOW`. [#597](https://github.com/nf-core/rnafusion/pull/597)
+- Add nf-test to local module: `FUSIONINSPECTOR`. [#601](https://github.com/nf-core/rnafusion/pull/601)
+- Add nf-test to local subworkflow: `FUSIONREPORT_WORKFLOW`. [#607](https://github.com/nf-core/rnafusion/pull/607)
 
 ### Changed
 
@@ -28,6 +37,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove local module `RRNA_TRANSCRIPTS` (replaced by nf-core module) [#541](https://github.com/nf-core/rnafusion/pull/541)
 - Allow fastq files without a dot before .fn(.gz)/.fastq(.gz) files [#548](https://github.com/nf-core/rnafusion/pull/548)
 - Remove double nested folder introduced in [#577](https://github.com/nf-core/rnafusion/pull/577), [#581](https://github.com/nf-core/rnafusion/pull/581)
+- Use docker.io and galaxy containers for fusioncatcher and starfusion (incl. fusioninspector) instead of wave as they are not functional on wave [#588](https://github.com/nf-core/rnafusion/pull/588)
+- Update STAR-Fusion to 1.14 [#588](https://github.com/nf-core/rnafusion/pull/588)
+- Use "-genePredExt -geneNameAsName2 -ignoreGroupsWithoutExons" (to mimic gms/tomte) for GTF_TO_REFFLAT [#505](https://github.com/nf-core/rnafusion/pull/505)
+- Integrate reference building in the main workflow [#505](https://github.com/nf-core/rnafusion/pull/505)
+- Move from ensembl to gencode base [#505](https://github.com/nf-core/rnafusion/pull/505)
+- Update from ensembl 102 to gencode 46 default references [#505](https://github.com/nf-core/rnafusion/pull/505)
+- Update`FUSIONINSPECTOR` to v2.10.0. [#601](https://github.com/nf-core/rnafusion/pull/601)
+- Remove local module `STARFUSION_DOWNLOAD` [#598](https://github.com/nf-core/rnafusion/pull/598)
+- Fix error message when parameter outdir is missing [#611](https://github.com/nf-core/rnafusion/pull/611)
 
 ### Fixed
 
@@ -38,16 +56,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed bug in nf-core `RRNATRANSCRIPTS` module [#563](https://github.com/nf-core/rnafusion/issues/563)
 - Fixed bug in `GFFREAD` that caused output `gffread_fasta` not being produced [#565](https://github.com/nf-core/rnafusion/issues/565)
 - Fixed bug in `FUSIONCATCHER_DOWNLOAD` that caused an error when running with singularity profile [#573](https://github.com/nf-core/rnafusion/issues/573)
+- Fixed missing script `gtf2bed` which caused local module `GET_RRNA_TRANSCRIPTS` to fail [#602](https://github.com/nf-core/rnafusion/issues/602)
 
 ### Removed
 
 - Remove fusionGDB from documentation and fusion-report download stubs [#503](https://github.com/nf-core/rnafusion/pull/503)
+- Removed test-build as reference building gets integrated in the main workflow [#505](https://github.com/nf-core/rnafusion/pull/505)
+- Removed parameter `--build_references`
 
 ### Parameters
 
-| Old parameter | New parameter |
-| ------------- | ------------- |
-|               | `--no_cosmic` |
+| Old parameter        | New parameter       |
+| -------------------- | ------------------- |
+|                      | `--no_cosmic`       |
+| `--build_references` | `--references_only` |
 
 ## v3.0.2 - [2024-04-10]
 

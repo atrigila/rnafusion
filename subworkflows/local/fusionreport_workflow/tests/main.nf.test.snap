@@ -1,0 +1,46 @@
+{
+    "FUSIONREPORT_WORKFLOW - Full Test": {
+        "content": [
+            [
+                [
+                    {
+                        "id": "test_sample"
+                    },
+                    "test_sample.fusionreport.tsv:md5,3593b7021f26cc5427fdc96f0d1c72f0"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "test_sample"
+                    },
+                    "test_sample.fusionreport_filtered.tsv:md5,3593b7021f26cc5427fdc96f0d1c72f0"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "test_sample"
+                    },
+                    "test_sample_fusionreport_index.html:md5,3513bcaa58446399c0957db69402d3bd"
+                ]
+            ],
+            [
+                [
+                    {
+                        "id": "test_sample"
+                    },
+                    "test_sample.fusions.csv:md5,49f378c2112d7e0b3b17d9095c79e6bd"
+                ]
+            ],
+            [
+                "versions.yml:md5,90749dbf8e3e7b259c935eabb8c6ce1e"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.3"
+        },
+        "timestamp": "2025-01-07T13:31:41.215356596"
+    }
+}

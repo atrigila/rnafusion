@@ -1,0 +1,37 @@
+{
+    "FUSIONCATCHER_WORKFLOW - Homo sapiens - FASTQs chr4": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test_fastqs",
+                            "single_end": false
+                        },
+                        "test_fastqs.fusioncatcher.fusion-genes.txt:md5,c826a24c49abfcec8164c478e1e74892"
+                    ]
+                ],
+                "1": [
+                    "versions.yml:md5,05bd93a243728a293211ce52e5f97282"
+                ],
+                "fusions": [
+                    [
+                        {
+                            "id": "test_fastqs",
+                            "single_end": false
+                        },
+                        "test_fastqs.fusioncatcher.fusion-genes.txt:md5,c826a24c49abfcec8164c478e1e74892"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,05bd93a243728a293211ce52e5f97282"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.3"
+        },
+        "timestamp": "2025-01-03T19:29:54.767628"
+    }
+}

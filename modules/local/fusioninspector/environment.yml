@@ -2,9 +2,11 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-  - bioconda::dfam=3.7
-  - bioconda::hmmer=3.4
-  - bioconda::star-fusion=1.7.0
-  - bioconda::trinity=2.15.2
-  - bioconda::samtools=1.21
-  - bioconda::star=2.7.11b
+  - bioconda::fusion-inspector=2.10.0
+  - bioconda::igv-reports=1.14.1
+  - bioconda::perl-json-xs=4.03
+  - bioconda::pysam=0.22.1
+  - conda-forge::perl-carp-assert=0.21
+  - pip
+  - pip:
+      - intervaltree==3.1.0

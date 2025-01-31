@@ -3,7 +3,9 @@ process STARFUSION {
     label 'process_high'
 
     conda "${moduleDir}/environment.yml"
-    container 'community.wave.seqera.io/library/dfam_hmmer_samtools_star-fusion_pruned:5694d82381bf039e'
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/be/bed86145102fdf7e381e1a506a4723676f98b4bbe1db5085d02213cef18525c9/data' :
+        'community.wave.seqera.io/library/dfam_hmmer_minimap2_star-fusion:aa3a8e3951498552'}"
 
     input:
     tuple val(meta), path(reads), path(junction)
@@ -17,13 +19,14 @@ process STARFUSION {
 
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
-    def fasta = meta.single_end ? "--left_fq ${reads[0]}" : "--left_fq ${reads[0]} --right_fq ${reads[1]}"
+    def fastq_arg = reads ? (meta.single_end ? "--left_fq ${reads[0]}" : "--left_fq ${reads[0]} --right_fq ${reads[1]}") : ""
+    def junction_arg =  junction ? "-J ${junction}" : ""
     def args = task.ext.args ?: ''
     """
     STAR-Fusion \\
         --genome_lib_dir $reference \\
-        $fasta \\
-        -J $junction \\
+        $fastq_arg \\
+        $junction_arg \\
         --CPU $task.cpus \\
         --examine_coding_effect \\
         --output_dir . \\

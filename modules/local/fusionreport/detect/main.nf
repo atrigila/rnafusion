@@ -2,7 +2,10 @@ process FUSIONREPORT {
     tag "$meta.id"
     label 'process_medium'
 
-    container "docker.io/clinicalgenomics/fusion-report:3.1.0"
+    conda "${moduleDir}/environment.yml"
+    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/d9/d9d1075dc45da6b08ec99c6e8bcc83e0ab71a674e7efdc7a36e459539793fcf9/data' :
+        'community.wave.seqera.io/library/fusion-report_openpyxl:6748677442b83a9a'}"
 
 
     input:
@@ -11,13 +14,13 @@ process FUSIONREPORT {
     val(tools_cutoff)
 
     output:
-    path "versions.yml"                                                 , emit: versions
     tuple val(meta), path("*fusionreport.tsv")                          , emit: fusion_list
     tuple val(meta), path("*fusionreport_filtered.tsv")                 , emit: fusion_list_filtered
-    tuple val(meta), path("*index.html")                                 , emit: report
+    tuple val(meta), path("*index.html")                                , emit: report
     tuple val(meta), path("*_*.html")                    , optional:true, emit: html
     tuple val(meta), path("*.csv")                       , optional:true, emit: csv
     tuple val(meta), path("*.json")                      , optional:true, emit: json
+    path "versions.yml"                                                 , emit: versions
 
     when:
     task.ext.when == null || task.ext.when

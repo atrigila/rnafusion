@@ -26,6 +26,8 @@
 
 > Andrews, S. (2010). FastQC: A Quality Control Tool for High Throughput Sequence Data [Online].
 
+- [MultiQC](https://pubmed.ncbi.nlm.nih.gov/27312411/)
+
 - [FusionCatcher](https://github.com/ndaniel/fusioncatcher)
 
   > Nicorici D, Satalan M, Edgren H, Kangaspeska S, Murumagi A, Kallioniemi O, Virtanen S, Kilkku O. FusionCatcher – a tool for finding somatic fusion genes in paired-end RNA-sequencing data. BioRxiv, 2014 Nov. doi: 10.1101/011650.
