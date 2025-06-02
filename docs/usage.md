@@ -32,7 +32,7 @@ The rnafusion pipeline needs references for the fusion detection tools, so downl
 ```bash
 nextflow run nf-core/rnafusion \
   -profile <docker/singularity/.../institute> \
-  --references_only --all \
+  --references_only --tools all \
   --cosmic_username <EMAIL> --cosmic_passwd <PASSWORD> \
   --genomes_base <PATH/TO/REFERENCES> \
   --outdir <PATH/TO/REFERENCES>
@@ -43,7 +43,7 @@ References for each tools can also be downloaded separately with:
 ```bash
 nextflow run nf-core/rnafusion \
   -profile <docker/singularity/.../institute> \
-  --references_only --<tool1> --<tool2> ... \
+  --references_only --tools <comma-separated-list-of-tools> \
   --cosmic_username <EMAIL> --cosmic_passwd <PASSWORD> \
   --genomes_base <PATH/TO/REFERENCES> \
   --outdir <OUTPUT/PATH>
@@ -51,7 +51,7 @@ nextflow run nf-core/rnafusion \
 
 If you are not covered by the research COSMIC license and want to avoid using COSMIC, you can provide the additional option `--no_cosmic`.
 
-### Downloading the cosmic database with SANGER or QUIAGEN
+### Downloading the cosmic database with SANGER or QIAGEN
 
 #### For academic users
 
@@ -64,15 +64,15 @@ Use credentials from QIAGEN and add `--qiagen`
 ```bash
 nextflow run nf-core/rnafusion \
   -profile <docker/singularity/.../institute> \
-  --references_only --<tool1> --<tool2> ... \
+  --references_only --tools <comma-separated-list-of-tools> \
   --cosmic_username <EMAIL> --cosmic_passwd <PASSWORD> \
   --genomes_base <PATH/TO/REFERENCES> \
   --outdir <OUTPUT/PATH> --qiagen
 ```
 
-#### STAR-Fusion references downloaded vs built
+<!-- #### STAR-Fusion references downloaded vs built
 
-By default STAR-Fusion references are **built**. You can also download them from [CTAT](https://github.com/NCIP/Trinity_CTAT/wiki) by using the flag `--starfusion_build FALSE` for both reference building and fusion detection. This allows more flexibility for different organisms but **be aware that STAR-Fusion reference download is not recommended as not fully tested!**
+By default STAR-Fusion references are **built**. You can also download them from [CTAT](https://github.com/NCIP/Trinity_CTAT/wiki) by using the flag `--starfusion_build FALSE` for both reference building and fusion detection. This allows more flexibility for different organisms but **be aware that STAR-Fusion reference download is not recommended as not fully tested!** -->
 
 #### Issues with building references
 
@@ -83,7 +83,7 @@ nextflow run nf-core/rnafusion  \
   -profile <docker/singularity/.../institute> \
   --references_only \
   --cosmic_username <EMAIL> --cosmic_passwd <PASSWORD> \
-  --fusionreport \
+  --tools fusionreport \
   --genomes_base <PATH/TO/REFERENCES> \
   --outdir <OUTPUT/PATH>
 ```
@@ -111,7 +111,7 @@ The references are only built based on ensembl version 102. It is not possible c
 
 ### Samplesheet input
 
-You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. The pipeline will detect whether a sample is single- or paired-end from the samplesheet - the `fastq_2` column is empty for single-end. The samplesheet has to be a comma-separated file (.csv) but can have as many columns as you desire. There is a strict requirement for the first 4 columns to match those defined in the table below with the header row included.
+You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. The pipeline will detect whether a sample is single- or paired-end from the samplesheet - the `fastq_2` column is empty for single-end. The samplesheet has to be a comma-separated (.csv), tab-separated (.tsv), yaml (.yaml or .yml) or json (.json) file but can have as many columns as you desire. There is a strict requirement for the `sample` and `strandedness` columns. One or more of these columns should be provided too: `fastq_1`, `bam`, `cram`, `junctions` and `splice_junctions`
 A final samplesheet file consisting of both single- and paired-end data may look something like the one below. This is for 6 samples, where `TREATMENT_REP3` has been sequenced twice.
 
 ```csv title="samplesheet.csv"
@@ -125,34 +125,83 @@ TREATMENT_REP3,AEG588A6_S6_L003_R1_001.fastq.gz,,forward
 TREATMENT_REP3,AEG588A6_S6_L004_R1_001.fastq.gz,,forward
 ```
 
-As you can see above for multiple runs of the same sample, the `sample` name has to be the same when you have re-sequenced the same sample more than once e.g. to increase sequencing depth. The pipeline will concatenate the raw reads before performing any downstream analysis.
+As you can see above for multiple runs of the same sample, the `sample` name has to be the same when you have re-sequenced the same sample more than once e.g. to increase sequencing depth. The pipeline will concatenate the raw reads before performing any downstream analysis. Note that multiple rows per sample are not supported for samples that contain `bam`, `cram`, `junctions` and/or `splice_junctions` files.
 
-| Column         | Description                                                                                                                                                                            |
-| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample`       | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`). |
-| `fastq_1`      | Full path to FastQ file for Illumina short reads 1. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
-| `fastq_2`      | Full path to FastQ file for Illumina short reads 2. File has to be gzipped and have the extension ".fastq.gz" or ".fq.gz".                                                             |
-| `strandedness` | Strandedness: forward or reverse.                                                                                                                                                      |
+| Column             | Description                                                                                                                                                                                                                                                                                                                                                                                                                                   | Required           |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `sample`           | Custom sample name. This entry will be identical for multiple sequencing libraries/runs from the same sample. Spaces in sample names are automatically converted to underscores (`_`).                                                                                                                                                                                                                                                        | :white_check_mark: |
+| `strandedness`     | Strandedness: forward or reverse.                                                                                                                                                                                                                                                                                                                                                                                                             | :white_check_mark: |
+| `fastq_1`          | Full path to FastQ file for Illumina short reads 1. File must exist, has to be gzipped and have the extension ".fastq.gz" or ".fq.gz". It's recommended to always provide the FASTQ files because the pipeline will be able to create any missing files from these. The FASTQ files are required to run `salmon`, `fusioninspector` and `fusioncatcher`.                                                                                      | :grey_question:    |
+| `fastq_2`          | Full path to FastQ file for Illumina short reads 2. File must exist, has to be gzipped and have the extension ".fastq.gz" or ".fq. It's recommended to always provide the FASTQ files because the pipeline will be able to create any missing files from these. The FASTQ files are required to run `salmon`, `fusioninspector` and `fusioncatcher`.gz".                                                                                      | :grey_question:    |
+| `bam`              | Full path to the BAM file created with STAR. File has to exist and must have the extension ".bam". It's the responsibility of the pipeline user to make sure this file has been correctly created, see the [prepare chapter](#preparing-bamcramjunctionssplice_junctions) for more information. The BAM file is required to run `ctatsplicing`, `stringtie`, `fusioninspector` and `arriba` when the `fastq_1` and `cram` fields are empty.   | :grey_question:    |
+| `bai`              | Full path to the index of the BAM file. File has to exist and must have the extension ".bai".                                                                                                                                                                                                                                                                                                                                                 | :x:                |
+| `cram`             | Full path to the CRAM file created with STAR. File has to exist and must have the extension ".cram". It's the responsibility of the pipeline user to make sure this file has been correctly created, see the [prepare chapter](#preparing-bamcramjunctionssplice_junctions) for more information. The CRAM file is required to run `ctatsplicing`, `stringtie`, `fusioninspector` and `arriba` when the `fastq_1` and `bam` fields are empty. | :grey_question:    |
+| `crai`             | Full path to the index of the CRAM file. File has to exist and must have the extension ".crai".                                                                                                                                                                                                                                                                                                                                               | :x:                |
+| `junctions`        | Full path to the file containing chimeric junctions determined by STAR. File has to exist and must have the extension ".junction". It's the responsibility of the pipeline user to make sure this file has been correctly created, see the [prepare chapter](#preparing-bamcramjunctionssplice_junctions) for more information. The junctions file is required to run `starfusion` and `ctatsplicing` when the `fastq_1` field is empty.      | :grey_question:    |
+| `splice_junctions` | Full path to the file containing splice junctions determined by STAR. File has to exist and must have the extension ".SJ.out.tab". It's the responsibility of the pipeline user to make sure this file has been correctly created, see the [prepare chapter](#preparing-bamcramjunctionssplice_junctions) for more information. The splice junctions file is required to run `ctatsplicing` when the `fastq_1` field is empty.                | :grey_question:    |
+| `seq_platform`     | The sequencing platform used to create to sequence the data in the FASTQ files. This value will take precedence over the value provided with `--seq_platform`.                                                                                                                                                                                                                                                                                | :x:                |
+| `seq_center`       | The sequencing center in which the data in the FASTQ files was sequenced. This value will take precedence over the value provided with `--seq_center`.                                                                                                                                                                                                                                                                                        | :x:                |
+
+:white_check_mark: = Required
+:x: = Not required
+:grey_question: = One of these columns should be provided
+
+### Preparing BAM/CRAM/junctions/splice_junctions
+
+In the pipeline the following STAR command is used to produce the needed files:
+
+```bash
+STAR \\
+    --genomeDir <path-to-star-index> \
+    --readFilesIn <comma-separated-list-of-forward-fastqs> <comma-separated-list-of-reverse-fastqs> \
+    --runThreadN <threads> \
+    --outFileNamePrefix <sample-name>. \
+    --outSAMattrRGline 'ID:<sample-name>' 'SM:<sample-name>' \
+    --outReadsUnmapped None  \
+    --outSAMstrandField intronMotif \
+    --chimOutJunctionFormat 1 \
+    --twopassMode None \
+    --outFilterMultimapNmax 50 \
+    --chimMultimapNmax 50 \
+    --quantMode GeneCounts \
+    --outSAMunmapped Within \
+    --readFilesCommand zcat  \
+    --alignSJstitchMismatchNmax 5 -1 5 5 \
+    --outSAMtype BAM SortedByCoordinate \
+    --chimSegmentMin 10 \
+    --peOverlapNbasesMin 10 \
+    --alignSplicedMateMapLminOverLmate 0.5 \
+    --chimJunctionOverhangMin 10 \
+    --chimScoreJunctionNonGTAG 0 \
+    --chimScoreDropMax 30 \
+    --chimScoreSeparation 1  \
+    --chimSegmentReadGapMax 3 \
+    --chimOutType Junctions WithinBAM'
+```
+
+We found that this command produces the best results for all downstream processes in the pipeline. It is highly recommended to use the same command for the input BAM, CRAM, junctions and splice_junctions files.
+
+The pipeline will still work when another command has been used, but it is possible that the results will be significantly different from the standard flow.
 
 ### Starting commands
 
-The pipeline can either be run using all fusion detection tools or specifying individual tools. Visualisation tools will be run on all fusions detected. To run all tools (`arriba`, `fusioncatcher`, `starfusion`, `stringtie`, `ctat-splicing`) use the `--all` parameter:
+The pipeline can either be run using all fusion detection tools or by specifying individual tools. Visualisation tools will be run on all fusions detected. To run all tools (`arriba`, `ctatsplicing`, `fusioncatcher`, `starfusion`, `stringtie`, `fusionreport`, `fastp`, `salmon`, `fusioninspector`) use the `all` option for the `--tools` parameter:
 
 ```bash
 nextflow run nf-core/rnafusion \
   -profile <docker/singularity/.../institute> \
-  --all \
+  --tools all \
   --input <SAMPLE_SHEET.CSV> \
   --genomes_base <PATH/TO/REFERENCES> \
   --outdir <OUTPUT/PATH>
 ```
 
-To run only a specific detection tool use: `--tool`:
+To run only a set of specific tools use `--tools` with a comma separated list of requested tools:
 
 ```bash
 nextflow run nf-core/rnafusion \
   -profile <docker/singularity/.../institute> \
-  --<tool1> --<tool2> ... \
+  --tools <comma-separated-list-of-tools> \
   --input <SAMPLE_SHEET.CSV> \
   --genomes_base <PATH/TO/REFERENCES> \
   --outdir <OUTPUT/PATH>
@@ -160,7 +209,7 @@ nextflow run nf-core/rnafusion \
 
 If you are not covered by the research COSMIC license and want to avoid using COSMIC, you can provide the additional option `--no_cosmic`.
 
-> **IMPORTANT: Either `--all` or `--<tool>`** is necessary to run detection tools
+> **IMPORTANT: `--tools`** is necessary to run detection tools
 
 `--genomes_base` should be the path to the directory containing the folder `references/` that was built with `--references_only`.
 
@@ -205,12 +254,12 @@ Supported genome is currently only GRCh38.
 
 #### Trimming
 
-When the flag `--fastp_trim` is used, `fastp` is used to provide all tools with trimmed reads. Quality and adapter trimming by default. In addition, tail trimming and adapter_fastq specification are possible. Example usage:
+When the flag `fastp` tool is used in `--tools`, `fastp` is used to provide all tools with trimmed reads. Quality and adapter trimming by default. In addition, tail trimming and adapter_fastq specification are possible. Example usage:
 
 ```bash
 nextflow run nf-core/rnafusion \
 -profile <docker/singularity/.../institute> \
---<tool1> --<tool2> ... \
+--tools fastp,... \
 --input <SAMPLE_SHEET.CSV> \
 --genomes_base <PATH/TO/REFERENCES> \
 --outdir <OUTPUT/PATH> \
@@ -224,7 +273,7 @@ nextflow run nf-core/rnafusion \
 ```bash
 nextflow run nf-core/rnafusion \
   -profile <docker/singularity/.../institute> \
-  --<tool1> --<tool2> ... \
+  --tools <comma-separated-list-of-tools> \
   --input <SAMPLE_SHEET.CSV> \
   --genomes_base <PATH/TO/REFERENCES> \
   --outdir <OUTPUT/PATH>
@@ -238,7 +287,7 @@ nextflow run nf-core/rnafusion \
 ```bash
 nextflow run nf-core/rnafusion \
   -profile <docker/singularity/.../institute> \
-  --<tool1> --<tool2> ... \
+  --tools <comma-separated-list-of-tools> \
   --input <SAMPLE_SHEET.CSV> \
   --genomes_base <PATH/TO/REFERENCES> \
   --outdir <OUTPUT/PATH>
@@ -259,7 +308,10 @@ FusionInspector can be run as a standalone with:
 ```bash
 nextflow run nf-core/rnafusion \
 -profile <docker/singularity/.../institute> \
---fusioninspector_only \
+--tools fusioninspector \
+--skip_qc \
+--skip_vis \
+--skip_vcf \
 --fusioninspector_fusions <PATH_TO_CUSTOM_FUSION_FILE> \
 --input <SAMPLE_SHEET.CSV> \
 --outdir <PATH>
@@ -278,7 +330,7 @@ GENE3--GENE4
 nextflow run nf-core/rnafusion \
 -profile <docker/singularity/.../institute> \
 --skip_qc \
---all OR <--tool>
+--tools <comma-separated-list-of-tools> \
 --input <SAMPLE_SHEET.CSV> \
 --genomes_base <PATH/TO/REFERENCES> \
 --outdir <PATH>
@@ -292,7 +344,7 @@ This will skip all QC-related processes (picard metrics collection)
 nextflow run nf-core/rnafusion \
 -profile <docker/singularity/.../institute> \
 --skip_vis \
---all OR <--tool>
+--tools <comma-separated-list-of-tools> \
 --input <SAMPLE_SHEET.CSV> \
 --genomes_base <PATH/TO/REFERENCES> \
 --outdir <PATH>
@@ -302,7 +354,7 @@ This will skip all visualisation processes, including `fusion-report`, `FusionIn
 
 #### Optional manual feed-in of fusion files
 
-It is possible to give the output of each tool manually using the argument: `--<tool>_fusions PATH/TO/FUSION/FILE`: this feature need more testing, don't hesitate to open an issue if you encounter problems.
+It is possible to give the output of each fusion detection tool manually using the argument: `--<tool>_fusions PATH/TO/FUSION/FILE`: this feature needs more testing, don't hesitate to open an issue if you encounter problems.
 
 #### Set different `--limitSjdbInsertNsj` parameter
 

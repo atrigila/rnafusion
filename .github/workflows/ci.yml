@@ -40,6 +40,7 @@ jobs:
         test_profile:
           - "test_stub"
           - "test_build"
+          - "test_stub_bam"
         compute_profile:
           - "docker"
           - "singularity"
@@ -106,6 +107,7 @@ jobs:
           version: ${{ env.NFT_VER }}
 
       - name: Run Tests (${{matrix.NXF_VER}} | ${{matrix.test_profile}} | ${{matrix.compute_profile}})
+        continue-on-error: ${{ matrix.NXF_VER == 'latest-everything' }}
         run: |
           nf-test test \
               --ci \

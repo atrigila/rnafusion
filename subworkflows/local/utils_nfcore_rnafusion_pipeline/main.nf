@@ -2,8 +2,6 @@
 // Subworkflow with functionality specific to the nf-core/rnafusion pipeline
 //
 
-import groovy.json.JsonSlurper
-
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     IMPORT FUNCTIONS / MODULES / SUBWORKFLOWS
@@ -74,21 +72,24 @@ workflow PIPELINE_INITIALISATION {
 
     Channel
         .fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json"))
-        .map {
-            meta, fastq_1, fastq_2, strandedness ->
-                if (!fastq_2) {
-                    return [ meta.id, meta + [ single_end:true ], [ fastq_1 ], strandedness ]
-                } else {
-                    return [ meta.id, meta + [ single_end:false ], [ fastq_1, fastq_2 ], strandedness ]
-                }
+        .map { meta, fastq_1, fastq_2, bam, bai, cram, crai, junctions, splice_junctions, strandedness ->
+            def meta_fastqs = []
+            if (!fastq_1) {
+                meta_fastqs = [ meta, [] ]
+            } else if (!fastq_2) {
+                meta_fastqs = [ meta + [single_end:true], [ fastq_1 ] ]
+            } else {
+                meta_fastqs = [ meta + [single_end:false], [ fastq_1, fastq_2 ] ]
+            }
+            return [ meta.id ] + meta_fastqs + [ bam, bai, cram, crai, junctions, splice_junctions, strandedness ]
         }
         .groupTuple()
         .map { samplesheet ->
             validateInputSamplesheet(samplesheet)
         }
         .map {
-            meta, fastqs ->
-                return [ meta, fastqs.flatten() ]
+            meta, fastqs, bam, bai, cram, crai, junctions, splice_junctions ->
+                return [ meta, fastqs.flatten(), bam, bai, cram, crai, junctions, splice_junctions ]
         }
         .set { ch_samplesheet }
 
@@ -158,11 +159,7 @@ def validateInputParameters() {
     genomeExistsError()
 
     if (params.no_cosmic) {
-            log.warn("Skipping COSMIC DB download from `FUSIONREPORT_DOWNLOAD` and skip using it in `FUSIONREPORT`")
-    }
-
-    if (params.starfusion_build && !params.fusion_annot_lib) {
-            error("No fusion annotation library provided. `STARFUSION_BUILD` is unable to run.")
+        log.warn("Skipping COSMIC DB download from `FUSIONREPORT_DOWNLOAD` and skip using it in `FUSIONREPORT`")
     }
 
 }
@@ -171,7 +168,25 @@ def validateInputParameters() {
 // Validate channels from input samplesheet
 //
 def validateInputSamplesheet(input) {
-    def (metas, fastqs) = input[1..2]
+    def (metas, fastqs, bam, bai, cram, crai, junctions, splice_junctions) = input[1..8]
+
+    def bam_list = bam.findAll { it -> it != [] }
+    def cram_list = cram.findAll { it -> it != [] }
+    def junctions_list = junctions.findAll { it -> it != [] }
+    def splice_junctions_list = splice_junctions.findAll { it -> it != [] }
+    // Check alignment and junction files (input is a list)
+    if (bam_list.size() > 1 || cram_list.size() > 1 || junctions_list.size() > 1 || splice_junctions_list.size() > 1) {
+        error("Please check input samplesheet -> Only one BAM or CRAM, junctions and split junctions file is allowed per sample: ${metas[0].id}")
+    }
+
+    bam = bam_list.size() > 0 ? bam_list[0] : []
+    cram = cram_list.size() > 0 ? cram_list[0] : []
+    junctions = junctions_list.size() > 0 ? junctions_list[0] : []
+    splice_junctions = splice_junctions_list.size() > 0 ? splice_junctions_list[0] : []
+
+    if (bam != [] && cram != []) {
+        error("Please check input samplesheet -> Using both BAM and CRAM files isn't allowed: ${metas[0].id}")
+    }
 
     // Check that multiple runs of the same sample are of the same strandedness
     def strandedness_ok = metas.collect{ it.strandedness }.unique().size == 1
@@ -181,11 +196,11 @@ def validateInputSamplesheet(input) {
 
     // Check that multiple runs of the same sample are of the same datatype i.e. single-end / paired-end
     def endedness_ok = metas.collect{ meta -> meta.single_end }.unique().size == 1
-    if (!endedness_ok) {
+    if (!endedness_ok && fastqs) {
         error("Please check input samplesheet -> Multiple runs of a sample must be of the same datatype i.e. single-end or paired-end: ${metas[0].id}")
     }
 
-    return [ metas[0], fastqs ]
+    return [ metas[0], fastqs, bam, bai.find { it -> it != [] } ?: [], cram, crai.find { it -> it != [] } ?: [], junctions, splice_junctions ]
 }
 
 //

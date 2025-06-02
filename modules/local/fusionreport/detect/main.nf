@@ -4,12 +4,12 @@ process FUSIONREPORT {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/d9/d9d1075dc45da6b08ec99c6e8bcc83e0ab71a674e7efdc7a36e459539793fcf9/data' :
-        'community.wave.seqera.io/library/fusion-report_openpyxl:6748677442b83a9a'}"
+        'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/d9/d99b7576d14caafd0494d6e2c1453edd161a933ccb62940701074128d3718bc5/data' :
+        'community.wave.seqera.io/library/fusion-report_openpyxl:77a2ba7e76ae0694'}"
 
 
     input:
-    tuple val(meta), path(reads), path(arriba_fusions), path(starfusion_fusions),  path(fusioncatcher_fusions)
+    tuple val(meta), path(arriba_fusions), path(starfusion_fusions),  path(fusioncatcher_fusions)
     tuple val(meta2), path(fusionreport_ref)
     val(tools_cutoff)
 
@@ -28,9 +28,9 @@ process FUSIONREPORT {
     script:
     def args = task.ext.args ?: ''
     def args2 = task.ext.args2 ?: ''
-    def tools = params.arriba || params.all         ? "--arriba ${arriba_fusions} " : ''
-    tools    += params.starfusion  || params.all    ? "--starfusion ${starfusion_fusions} " : ''
-    tools    += params.fusioncatcher  || params.all ? "--fusioncatcher ${fusioncatcher_fusions} " : ''
+    def tools = arriba_fusions        ? "--arriba ${arriba_fusions} " : ''
+    tools    += starfusion_fusions    ? "--starfusion ${starfusion_fusions} " : ''
+    tools    += fusioncatcher_fusions ? "--fusioncatcher ${fusioncatcher_fusions} " : ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
     fusion_report run $meta.id . $fusionreport_ref $tools --allow-multiple-gene-symbols --tool-cutoff $tools_cutoff $args $args2

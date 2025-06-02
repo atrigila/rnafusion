@@ -17,20 +17,18 @@ workflow FUSIONINSPECTOR_WORKFLOW {
         ch_arriba_ref_cytobands
         ch_hgnc_ref
         ch_hgnc_date
+        ch_starfusion_ref
+        skip_vis
+        skip_vcf
 
     main:
         ch_versions = Channel.empty()
         ch_arriba_visualisation = Channel.empty()
-        index ="${params.starfusion_ref}"
 
         ch_fusion_list = ( params.tools_cutoff > 1 ? fusion_list_filtered : fusion_list )
-        .branch{
-            no_fusions: it[1].size() == 0
-            fusions: it[1].size() > 0
-        }
 
         if (params.whitelist)  {
-            ch_whitelist = ch_fusion_list.fusions.combine(Channel.value(file(params.whitelist, checkIfExists:true)))
+            ch_whitelist = ch_fusion_list.combine(Channel.value(file(params.whitelist, checkIfExists:true)))
                             .map { meta, fusions, whitelist -> [ meta, [fusions, whitelist] ] }
 
             CAT_CAT(ch_whitelist) // fusioninspector takes care of possible duplicates
@@ -38,22 +36,30 @@ workflow FUSIONINSPECTOR_WORKFLOW {
             ch_reads_fusion = reads.join(CAT_CAT.out.file_out )
         }
         else {
-            ch_reads_fusion = reads.join(ch_fusion_list.fusions )
+            ch_reads_fusion = reads.join(ch_fusion_list)
         }
 
-        FUSIONINSPECTOR( ch_reads_fusion, index)
+        FUSIONINSPECTOR( ch_reads_fusion, ch_starfusion_ref)
         ch_versions = ch_versions.mix(FUSIONINSPECTOR.out.versions)
 
-        AGAT_CONVERTSPGFF2TSV(FUSIONINSPECTOR.out.out_gtf)
-        ch_versions = ch_versions.mix(AGAT_CONVERTSPGFF2TSV.out.versions)
+        if(!skip_vcf) {
+            AGAT_CONVERTSPGFF2TSV(FUSIONINSPECTOR.out.out_gtf)
+            ch_versions = ch_versions.mix(AGAT_CONVERTSPGFF2TSV.out.versions)
 
-        fusion_data = FUSIONINSPECTOR.out.tsv_coding_effect.join(AGAT_CONVERTSPGFF2TSV.out.tsv).join(fusionreport_out).join(fusionreport_csv)
-        VCF_COLLECT(fusion_data, ch_hgnc_ref, ch_hgnc_date)
-        ch_versions = ch_versions.mix(VCF_COLLECT.out.versions)
+            fusion_data = FUSIONINSPECTOR.out.abridged_tsv.join(AGAT_CONVERTSPGFF2TSV.out.tsv).join(fusionreport_out).join(fusionreport_csv)
 
-        if ((params.starfusion || params.all || params.stringtie) && !params.fusioninspector_only && !params.skip_vis) {
+            VCF_COLLECT(fusion_data, ch_hgnc_ref, ch_hgnc_date)
+            ch_versions = ch_versions.mix(VCF_COLLECT.out.versions)
+        }
+
+        if (!skip_vis) {
             ch_bam_sorted_indexed_fusions = bam_sorted_indexed.join(FUSIONINSPECTOR.out.tsv)
-            ARRIBA_VISUALISATION(ch_bam_sorted_indexed_fusions, ch_gtf, ch_arriba_ref_protein_domains, ch_arriba_ref_cytobands)
+            ARRIBA_VISUALISATION(
+                ch_bam_sorted_indexed_fusions,
+                ch_gtf,
+                ch_arriba_ref_protein_domains.map { it -> [[id:it.name], it]},
+                ch_arriba_ref_cytobands.map { it -> [[id:it.name], it]}
+            )
             ch_versions = ch_versions.mix(ARRIBA_VISUALISATION.out.versions)
             ch_arriba_visualisation = ARRIBA_VISUALISATION.out.pdf
         }

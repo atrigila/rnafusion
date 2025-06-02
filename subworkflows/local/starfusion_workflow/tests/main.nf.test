@@ -99,10 +99,6 @@ nextflow_workflow {
                 { assert workflow.success },
                 { assert snapshot(
                     workflow.out.fusions,
-                    file(workflow.out.star_stats[0][1]).name,
-                    workflow.out.star_gene_count,
-                    workflow.out.ch_bam_sorted,
-                    workflow.out.ch_bam_sorted_indexed,
                     workflow.out.versions
                 ).match() }
             )

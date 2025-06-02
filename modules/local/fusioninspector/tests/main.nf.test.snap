@@ -15,9 +15,6 @@
                     
                 ],
                 "2": [
-                    
-                ],
-                "3": [
                     [
                         {
                             "id": "test",
@@ -26,7 +23,7 @@
                         "test.FusionInspector.log:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
-                "4": [
+                "3": [
                     [
                         {
                             "id": "test",
@@ -35,7 +32,7 @@
                         "test.fusion_inspector_web.html:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
-                "5": [
+                "4": [
                     [
                         {
                             "id": "test",
@@ -44,7 +41,7 @@
                         "test.FusionInspector.fusions.abridged.tsv:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
-                "6": [
+                "5": [
                     [
                         {
                             "id": "test",
@@ -73,7 +70,7 @@
                         ]
                     ]
                 ],
-                "7": [
+                "6": [
                     [
                         {
                             "id": "test",
@@ -133,7 +130,7 @@
                         ]
                     ]
                 ],
-                "8": [
+                "7": [
                     [
                         {
                             "id": "test",
@@ -186,7 +183,7 @@
                         ]
                     ]
                 ],
-                "9": [
+                "8": [
                     "versions.yml:md5,ad8d0da5929dfa70794bccf8765ddb23"
                 ],
                 "abridged_tsv": [
@@ -370,9 +367,6 @@
                         "test.FusionInspector.fusions.tsv:md5,d41d8cd98f00b204e9800998ecf8427e"
                     ]
                 ],
-                "tsv_coding_effect": [
-                    
-                ],
                 "versions": [
                     "versions.yml:md5,ad8d0da5929dfa70794bccf8765ddb23"
                 ]
@@ -380,9 +374,9 @@
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.3"
+            "nextflow": "25.04.2"
         },
-        "timestamp": "2024-12-31T13:48:13.020571472"
+        "timestamp": "2025-05-19T14:11:46.597061"
     },
     "FUSIONINSPECTOR": {
         "content": [

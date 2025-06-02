@@ -3,7 +3,6 @@ include { FUSIONREPORT      }     from '../../../modules/local/fusionreport/dete
 
 workflow FUSIONREPORT_WORKFLOW {
     take:
-        reads
         fusionreport_ref
         arriba_fusions
         starfusion_fusions
@@ -14,31 +13,23 @@ workflow FUSIONREPORT_WORKFLOW {
         ch_report = Channel.empty()
         ch_csv = Channel.empty()
 
-        if (!params.fusioninspector_only) {
-            reads_fusions = reads
-            .join(arriba_fusions, failOnMismatch:true, failOnDuplicate:true)
+        def ch_fusions = arriba_fusions
             .join(starfusion_fusions, failOnMismatch:true, failOnDuplicate:true)
             .join(fusioncatcher_fusions, failOnMismatch:true, failOnDuplicate:true)
 
-            FUSIONREPORT(reads_fusions, fusionreport_ref, params.tools_cutoff)
-            ch_fusion_list = FUSIONREPORT.out.fusion_list
-            ch_fusion_list_filtered = FUSIONREPORT.out.fusion_list_filtered
-            ch_versions = ch_versions.mix(FUSIONREPORT.out.versions)
-            ch_report = FUSIONREPORT.out.report
-            ch_csv = FUSIONREPORT.out.csv
-        } else {
-            ch_fusion_list = reads.combine(Channel.value(file(params.fusioninspector_fusions, checkIfExists:true)))
-                            .map { it -> [ it[0], it[1] ] }
-
-            ch_fusion_list_filtered  = ch_fusion_list
-        }
+        FUSIONREPORT(ch_fusions, fusionreport_ref, params.tools_cutoff)
+        ch_fusion_list = FUSIONREPORT.out.fusion_list
+        ch_fusion_list_filtered = FUSIONREPORT.out.fusion_list_filtered
+        ch_versions = ch_versions.mix(FUSIONREPORT.out.versions)
+        ch_report = FUSIONREPORT.out.report
+        ch_csv = FUSIONREPORT.out.csv
 
     emit:
         versions                 = ch_versions
         fusion_list              = ch_fusion_list
         fusion_list_filtered     = ch_fusion_list_filtered
-        report                   = ch_report.ifEmpty(null)
-        csv                      = ch_csv.ifEmpty(null)
+        report                   = ch_report
+        csv                      = ch_csv
 
 }
 

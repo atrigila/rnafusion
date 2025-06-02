@@ -21,6 +21,7 @@ process VCF_COLLECT {
 
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
+    // TODO use BGZIP to compress the VCF file instead of GZIP
     """
     vcf_collect.py \\
         --fusioninspector $fusioninspector_tsv \\
@@ -43,7 +44,7 @@ process VCF_COLLECT {
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    touch ${prefix}.vcf
+    touch ${prefix}_fusion_data.vcf.gz
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
